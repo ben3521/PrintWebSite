@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PrintWebSite.Data;
+using PrintWebSite.Entities;
 using PrintWebSite.Mappings;
 
 namespace PrintWebSite
@@ -42,7 +43,7 @@ namespace PrintWebSite
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<PrintWebUser, IdentityRole>()
                    .AddRoleManager<RoleManager<IdentityRole>>()
                    .AddEntityFrameworkStores<PrintWebSiteDbContext>();
 

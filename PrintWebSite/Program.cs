@@ -24,7 +24,7 @@ namespace PrintWebSite
                     var serviceProvider = services.GetRequiredService<IServiceProvider>();
                     var configuration = services.GetRequiredService<IConfiguration>();
 
-                    Seed.SeedData(serviceProvider, configuration).Wait();
+                    //Seed.SeedData(serviceProvider, configuration).Wait();  //---> Use For Seeding Data To DB
 
                 }
                 catch (Exception exception)

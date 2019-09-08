@@ -154,7 +154,7 @@ namespace PrintWebSite
                 Configuration currencySymbolConfig = new Configuration()
                 {
                     Key = "CurrencySymbol",
-                    Value = "$",
+                    Value = "£",
                     Description = "This currency symbol is shown with prices on website and invoices.",
                     ConfigurationType = (int)ConfigurationType.Other,
                     ModifiedOn = DateTime.Now

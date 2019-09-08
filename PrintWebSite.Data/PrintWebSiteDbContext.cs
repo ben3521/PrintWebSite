@@ -8,7 +8,7 @@ using System.Text;
 
 namespace PrintWebSite.Data
 {
-    public class PrintWebSiteDbContext : IdentityDbContext<IdentityUser>
+    public class PrintWebSiteDbContext : IdentityDbContext<PrintWebUser>
     {
         public PrintWebSiteDbContext(DbContextOptions<PrintWebSiteDbContext> contextOptions)
             : base(contextOptions)
