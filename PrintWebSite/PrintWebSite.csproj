@@ -25,4 +25,9 @@
     <ProjectReference Include="..\PrintWebSite.Shared\PrintWebSite.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Content\css\" />
+    <Folder Include="wwwroot\Scripts\" />
+  </ItemGroup>
+
 </Project>

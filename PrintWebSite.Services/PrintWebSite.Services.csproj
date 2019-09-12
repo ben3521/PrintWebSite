@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PrintWebSite.Data\PrintWebSite.Data.csproj" />
-    <ProjectReference Include="..\PrintWebSite.Entities\PrintWebSite.Entities.csproj" />
   </ItemGroup>
 
 </Project>

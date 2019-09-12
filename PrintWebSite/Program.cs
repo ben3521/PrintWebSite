@@ -5,9 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PrintWebSite.Code.Extensions;
+
 
 namespace PrintWebSite
 {
@@ -35,10 +38,28 @@ namespace PrintWebSite
             }
             host.Run();
         }
+        //public static IWebHost BuildWebHost(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //        //.UseSetting("https_port", "443")                
+        //        .UseStartup<Startup>()
+        //        .Build();
+
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                //.UseSetting("https_port", "443")
-                .UseStartup<Startup>()
-                .Build();
+        WebHost.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration(AddDbConfiguration)
+            //.ConfigureAppConfiguration((hostingContext, config) =>
+            //{
+            //    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);                
+            //})
+            .UseStartup<Startup>()
+            .Build();
+
+        //private static void AddDbConfiguration(WebHostBuilderContext context, IConfigurationBuilder builder)
+        private static void AddDbConfiguration(IConfigurationBuilder builder)
+        {
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            builder.AddConfigDbProvider(options => options.UseSqlServer(connectionString));
+        }
     }
 }

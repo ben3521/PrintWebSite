@@ -1,0 +1,247 @@
+// Footer
+.footer {
+  padding-top: 5rem;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.2rem;
+
+  .widget-title {
+    margin-bottom: 3.6rem;
+    color: #fff;
+    font: 700 1.2rem / 1.25 $second-font-family;
+    text-transform: uppercase;
+  }
+
+  .widget {
+    margin-bottom: 4.5rem;
+  }
+
+  .links {
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: 2rem;
+    }
+  }
+
+  a {
+    color: inherit;
+
+    &:hover,
+    &:focus {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.footer-middle {
+  padding: 3.4rem 0 3.7rem;
+  letter-spacing: .05em;
+}
+
+.contact-info {
+  margin-bottom: 0;
+
+  li {
+    margin-bottom: 1.7rem;
+    line-height: 1.4;
+  }
+}
+
+.contact-info-label {
+  display: block;
+}
+
+.work-status {
+  color: #11c211;
+}
+
+.social-info {
+  margin-bottom: 0;
+
+  li {
+    margin-bottom: 3rem;
+  }
+
+  i {
+    display: inline-block;
+    min-width: 26px;
+    margin-right: .8rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  i,
+  span {
+    vertical-align: middle;
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.social-info a:hover > span,
+.social-info a:focus > span {
+  text-decoration: underline;
+}
+
+.widget-newsletter {
+  p {
+    max-width: 290px;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    max-width: 290px;
+  }
+
+  .form-control {
+    height: 5rem;
+    margin-bottom: 1rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid #fff;
+    border-radius: 0;
+    background-color: transparent;
+    color: #fff;
+    font: 400 1.2rem / 1.5 $font-family;
+    letter-spacing: .05em;
+  }
+
+  .form-control:focus {
+    border-color: #fff;
+    background-color: transparent;
+    color: #fff;
+  }
+
+  .form-control::-webkit-input-placeholder {
+    color: #fff;
+  }
+
+  .form-control:-ms-input-placeholder {
+    color: #fff;
+  }
+
+  .form-control::-ms-input-placeholder {
+    color: #fff;
+  }
+
+  .form-control::placeholder {
+    color: #fff;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 1.95rem 1.5rem;
+    border-radius: 0;
+    background-color: #fff;
+    color: #000;
+    font: 700 1.4rem / 1 $second-font-family;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus {
+      background-color: #e1e1e1;
+    }
+  }
+}
+
+.footer-bottom {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 4.15rem;
+  padding-bottom: 4.15rem;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+.footer-copyright {
+  margin-bottom: 1.2rem;
+  color: #fff;
+  font: 400 1.2rem / 1.25 $second-font-family;
+  text-transform: uppercase;
+}
+
+.full-screen-slider .footer-copyright {
+  position: absolute;
+  bottom: 35px;
+  left: 45px;
+  color: #000;
+  z-index: 10;
+}
+
+.footer-payments {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Scroll Top Button
+#scroll-top {
+  position: fixed;
+  right: 15px;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  padding: 11px 0;
+  -webkit-transform: translateY(40px);
+  transform: translateY(40px);
+  transition: all .3s;
+  border-radius: $border-radius $border-radius 0 0;
+  background-color: #404040;
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+}
+
+#scroll-top:hover,
+#scroll-top:focus {
+  background-color: #555;
+}
+
+#scroll-top.fixed {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+@include mq('lg') {
+  .footer {
+    .col-lg-2 {
+      -ms-flex: 0 0 20%;
+      flex: 0 0 20%;
+      max-width: 20%;
+    }
+
+    .col-lg-4 {
+      -ms-flex: 0 0 40%;
+      flex: 0 0 40%;
+      max-width: 40%;
+    }
+  }
+
+  .footer-bottom {
+    flex-direction: row;
+    text-align: center;
+  }
+
+  .footer-copyright {
+    margin-bottom: 0;
+  }
+
+  .footer-payments {
+    margin-right: 0;
+  }
+}

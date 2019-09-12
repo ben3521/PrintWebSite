@@ -1,0 +1,47 @@
+﻿@model PrintWebSite.ViewModels.PageViewModel
+
+@{
+    var baseModel = Model;
+
+    if (baseModel == null)
+    {
+        baseModel = new PrintWebSite.ViewModels.PageViewModel();
+    }
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>@string.Format("{0} {1} {2}", baseModel.PageTitle, string.IsNullOrEmpty(baseModel.PageTitle) ? "" : "-", Configuration.GetSection("ApplicationName").Value).Replace("  ", " ").Trim()</title>
+
+    <meta name="keywords" content="HTML5 Template" />
+    <meta name="description" content="Porto - Bootstrap eCommerce Template">
+    <meta name="author" content="SW-THEMES">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="Content/images/icons/favicon.ico">
+
+    <!-- Plugins CSS File -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Main CSS File -->
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderBody()
+
+    <!-- Plugins JS File -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/plugins.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="~/Scripts/main.min.js"></script>
+
+</body>
+</html>
