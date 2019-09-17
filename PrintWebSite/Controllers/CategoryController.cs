@@ -1,38 +1,29 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using PrintWebSite.Data;
 using PrintWebSite.Services;
 using PrintWebSite.Shared;
 using PrintWebSite.ViewModels;
-using System.Linq;
 
 namespace PrintWebSite.Controllers
 {
-    public class HomeController : Controller
+    public class CategoryController : Controller
     {
         private readonly IConfiguration configuration;
         private readonly PrintWebSiteDbContext context;
-        public HomeController(PrintWebSiteDbContext context, IConfiguration configuration)
+
+        public CategoryController(PrintWebSiteDbContext context, IConfiguration configuration)
         {
             this.configuration = configuration;
             this.context = context;
         }
-        public IActionResult Index()
-        {
-            PageViewModel model = new PageViewModel();
-
-            model.PageTitle = "Logo Sports Home";
-            model.PageDescription = "LogoSports Online WebStore";
-            //model.PageURL = Url.Home().ToSiteURL();
-            //model.PageImageURL = PictureHelper.PageImageURL("products.jpg");
-            ViewBag.IsHome = "Home";
-            return View(model);
-        }
-
 
         public IActionResult Search(string category, string q, int? pageNo, bool isPartial = false)
-        {
+        {            
             var pageSize = int.Parse(configuration.GetSection("FrontendRecordsSizePerPage").Value);
 
             CategoriesService categoriesService = new CategoriesService(context);
@@ -90,7 +81,5 @@ namespace PrintWebSite.Controllers
                 return View(model);
             }
         }
-
-
     }
 }

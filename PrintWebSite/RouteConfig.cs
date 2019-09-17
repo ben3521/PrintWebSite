@@ -79,9 +79,9 @@ namespace PrintWebSite
             routeBuilder.MapLocalizedRoute("Sitemap", "sitemap",
                 new { controller = "Common", action = "Sitemap" });
 
-            //product search
+            //product search *****************************
             routeBuilder.MapLocalizedRoute("ProductSearch", "search/",
-                new { controller = "Catalog", action = "Search" });
+                new { controller = "Home", action = "Search" });
 
             routeBuilder.MapLocalizedRoute("ProductSearchAutoComplete", "catalog/searchtermautocomplete",
                 new { controller = "Catalog", action = "SearchTermAutoComplete" });
