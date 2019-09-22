@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-lg-9 padding-left-lg col-xl-10">
                     <div class="banner banner-cat">
-                        <img src="assets/images/banners/banner-1.jpg" alt="banner">
+                        <img src="Content/images/banners/banner-1.jpg" alt="banner">
                         <div class="banner-content">
                             <h1>men’s Accessories</h1>
                         </div><!-- End .banner-content -->
@@ -41,63 +41,9 @@
                         </div><!-- End .toolbox-item -->
                     </nav>
 
-                    <div class="row row-sm">
-                        @foreach (var product in Model.Products)
-                        {
-                            <div class="col-6 col-md-4 col-xl-3">
-                                <div class="product">
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="~/Content/images/products/product-1.jpg" alt="product">
-                                        </a>
-                                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                                    </figure>
-                                    <div class="product-details action-inner">
-                                        <h2 class="product-title">
-                                            <a href="product.html">@product.Name</a>
-                                        </h2>
-                                        <!-- End .product-action -->
-                                        <div class="price-box">
-                                            <span class="product-price">@product.Price</span>
-                                        </div><!-- End .price-box -->
-                                    </div><!-- End .product-details -->
-                                </div><!-- End .product -->
-                            </div><!-- End .col-xl-3 -->
-                        }
-                    </div><!-- End .row -->
 
-                    <nav class="toolbox toolbox-pagination">
-                        <ul class="pagination">
-                            @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
-                            {
-                                var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
+                    @await Html.PartialAsync("_FilterProducts", Model)
 
-                                <li class="page-item @active">
-                                    <a asp-route="ProductSearch"
-                                       asp-route-pageno="@(page)">
-                                        <span class="page-link">@(page)</span>
-                                    </a>
-                                </li>
-                            }
-
-                            @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
-                            {
-                                <li class="page-link page-link-btn disabled">
-                                    <i class="icon-angle-right"></i>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="page-item">
-                                    <a class="page-link page-link-btn" asp-route="ProductSearch"
-                                       asp-route-pageno="@(Model.Pager.CurrentPage + 1)">
-                                        <i class="icon-angle-right"></i>
-                                    </a>
-                                </li>
-                            }
-
-                        </ul>
-                    </nav>
                 </div><!-- End .col-lg-8 -->
 
                 <aside class="sidebar-shop col-lg-3 col-xl-2 order-lg-first">
@@ -113,7 +59,7 @@
                                         {
                                             foreach (var category in Model.Categories.OrderBy(x => x.Name))
                                             {
-                                                <li><a href="#">@category.Name</a></li>
+                                                <li><a href="#" data-filter-id="@category.Name" class="FilterAnchor">@category.Name</a></li>
                                             }
                                         }
                                     </ul>
@@ -230,7 +176,7 @@
             <div class="footer-bottom">
                 <p class="footer-copyright">Copyright 2018 porto. All Rights Reserved.</p>
 
-                <img src="assets/images/payments.png" alt="payment methods" class="footer-payments">
+                <img src="Content/images/payments.png" alt="payment methods" class="footer-payments">
             </div><!-- End .footer-bottom -->
         </div><!-- End .container-fluid -->
     </footer><!-- End .footer -->
@@ -338,3 +284,53 @@
 
 <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
+@section Scripts
+    {
+    <script>
+       $(".FilterAnchor").click(function () {
+    var filter = $(this).attr("data-filter-id");
+
+    if (filter !== "" || filter !== undefined) {
+        GetData(filter);
+    }
+});
+
+function GetData(dUrl) {
+    //showLoader();
+
+    $.ajax({
+        url: '@Url.Action("Search")',
+        data: {
+            Category: dUrl
+        }
+    })
+        .done(function (response) {
+            //window.history.pushState(null, "", "?Category=" + dUrl);
+            @*window.location.href = "@Url.Action("Search")?Category=" + dUrl;*@
+            $("#productsDiv").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert("FAIL");
+        })
+        .always(function () {
+            @*window.location.href = "@Url.Action("Search")?Category=" + dUrl;*@
+            //hideLoader();
+            //console.log(window.location.hash);
+            //console.log(window.location.href);
+            //console.log(window.location.search);
+            //console.log(location.pathname.split("/").pop());
+            //console.log(location.pathname);
+        });
+        }
+
+        $(window).on("hashchange", function (e) {
+            console.log('window changed');
+        });
+
+        $(window).on('popstate', function (e) {
+
+        console.log(e.originalEvent.state);
+        });
+
+    </script>
+}

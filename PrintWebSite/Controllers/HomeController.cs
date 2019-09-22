@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using PrintWebSite.Code.Extensions;
 using PrintWebSite.Data;
 using PrintWebSite.Services;
 using PrintWebSite.Shared;
@@ -12,10 +13,12 @@ namespace PrintWebSite.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration configuration;
+        private readonly IProductsRepository productsRepository;
         private readonly PrintWebSiteDbContext context;
-        public HomeController(PrintWebSiteDbContext context, IConfiguration configuration)
+        public HomeController(PrintWebSiteDbContext context, IConfiguration configuration, IProductsRepository productsRepository)
         {
             this.configuration = configuration;
+            this.productsRepository = productsRepository;
             this.context = context;
         }
         public IActionResult Index()
@@ -30,8 +33,7 @@ namespace PrintWebSite.Controllers
             return View(model);
         }
 
-
-        public IActionResult Search(string category, string q, int? pageNo, bool isPartial = false)
+        public IActionResult Search(QueryStringViewModel queryStringViewModel)
         {
             var pageSize = int.Parse(configuration.GetSection("FrontendRecordsSizePerPage").Value);
 
@@ -41,9 +43,9 @@ namespace PrintWebSite.Controllers
                 Categories = categoriesService.GetAllCategories()
             };
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(queryStringViewModel.Category))
             {
-                var selectedCategory = categoriesService.GetCategoryByName(category);
+                var selectedCategory = categoriesService.GetCategoryByName(queryStringViewModel.Category);
 
                 if (selectedCategory == null) return NotFound();
                 else
@@ -69,28 +71,22 @@ namespace PrintWebSite.Controllers
 
             //model.PageImageURL = PictureHelper.PageImageURL("products.jpg");
 
-            model.SearchTerm = q;
-            model.isPartial = isPartial;
+            model.SearchTerm = queryStringViewModel.q;
+            //model.isPartial = isPartial;
 
-            var selectedCategoryIDs = model.SearchedCategories?.Select(x => x.ID).ToList();
+            var selectedCategoryIDs = model.SearchedCategories?.Select(x => x.ID).ToList();            
 
-            ProductsService productService = new ProductsService(context);
+            model.Products = productsRepository.SearchProducts(selectedCategoryIDs, model.SearchTerm, queryStringViewModel.PageNo, pageSize);
+            var totalProducts = productsRepository.GetProductCount(selectedCategoryIDs, queryStringViewModel.q);
 
-            model.Products = productService.SearchProducts(selectedCategoryIDs, model.SearchTerm, pageNo, pageSize);
-            var totalProducts = productService.GetProductCount(selectedCategoryIDs, q);
+            model.Pager = new Pager(totalProducts, queryStringViewModel.PageNo, pageSize);           
 
-            model.Pager = new Pager(totalProducts, pageNo, pageSize);
-
-            if (model.isPartial)
+            if (Request.IsAjaxRequest())
             {
-                return PartialView(model);
+                return PartialView("_FilterProducts", model);
             }
-            else
-            {
-                return View(model);
-            }
+            return View(model);
+            
         }
-
-
     }
 }

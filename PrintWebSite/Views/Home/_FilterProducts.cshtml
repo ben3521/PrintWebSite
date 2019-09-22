@@ -1,0 +1,61 @@
+﻿@model PrintWebSite.ViewModels.ProductsViewModel
+
+    <div id="productsDiv">
+        <div class="row row-sm">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col-6 col-md-4 col-xl-3">
+                    <div class="product">
+                        <figure class="product-image-container">
+                            <a href="product.html" class="product-image">
+                                <img src="~/Content/images/products/product-1.jpg" alt="product">
+                            </a>
+                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                        </figure>
+                        <div class="product-details action-inner">
+                            <h2 class="product-title">
+                                <a href="product.html">@product.Name</a>
+                            </h2>
+                            <!-- End .product-action -->
+                            <div class="price-box">
+                                <span class="product-price">@product.Price</span>
+                            </div><!-- End .price-box -->
+                        </div><!-- End .product-details -->
+                    </div><!-- End .product -->
+                </div><!-- End .col-xl-3 -->
+            }
+        </div>
+    </div>    <!-- End .row -->
+
+<nav class="toolbox toolbox-pagination">
+    <ul class="pagination">
+        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
+        {
+            var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
+
+            <li class="page-item @active">
+                <a asp-route="ProductSearch"
+                   asp-route-pageno="@(page)">
+                    <span class="page-link">@(page)</span>
+                </a>
+            </li>
+        }
+
+        @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
+        {
+            <li class="page-link page-link-btn disabled">
+                <i class="icon-angle-right"></i>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link page-link-btn" asp-route="ProductSearch"
+                   asp-route-pageno="@(Model.Pager.CurrentPage + 1)">
+                    <i class="icon-angle-right"></i>
+                </a>
+            </li>
+        }
+
+    </ul>
+</nav>

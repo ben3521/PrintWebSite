@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PrintWebSite.Data;
 using PrintWebSite.Entities;
 using PrintWebSite.Mappings;
+using PrintWebSite.Services;
 
 namespace PrintWebSite
 {
@@ -47,6 +48,8 @@ namespace PrintWebSite
             services.AddIdentity<PrintWebUser, IdentityRole>()
                    .AddRoleManager<RoleManager<IdentityRole>>()
                    .AddEntityFrameworkStores<PrintWebSiteDbContext>();
+
+            services.AddTransient<IProductsRepository, ProductsRepository>();
 
             services.AddMvc();
         }
