@@ -19,49 +19,68 @@ namespace PrintWebSite.Code.Helpers
         //    return _configuration.GetValue<string>("CurrencySymbol"); 
         //}                    
         
-        private string GetConfigValue(string key)
-        {
-            try
-            {
-                return _configuration.GetValue<string>(key); 
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-        public string ApplicationName { get { return GetConfigValue("ApplicationName"); } }
-        public string Address { get { return GetConfigValue("Address"); } }
-        public string PhoneNumber { get { return GetConfigValue("PhoneNumber"); } }
-        public string MobileNumber { get { return GetConfigValue("MobileNumber"); } }
-        public string FacebookURL { get { return GetConfigValue("FacebookURL"); } }
-        public string TwitterUsername { get { return GetConfigValue("TwitterUsername"); } }
-        public string TwitterURL { get { return GetConfigValue("TwitterURL"); } }
-        public string WhatsAppNumber { get { return GetConfigValue("WhatsAppNumber"); } }
-        public string InstagramURL { get { return GetConfigValue("InstagramURL"); } }
-        public string YouTubeURL { get { return GetConfigValue("YouTubeURL"); } }
-        public string LinkedInURL { get { return GetConfigValue("LinkedInURL"); } }
+        //private string GetConfigValue(string key)
+        //{
+        //    try
+        //    {
+        //        return _configuration.GetValue<string>(key); 
+        //    }
+        //    catch
+        //    {
+        //        return string.Empty;
+        //    }
+        //}
+        //public string ApplicationName { get { return GetConfigValue("ApplicationName"); } }
+        //public string Address { get { return GetConfigValue("Address"); } }
+        //public string PhoneNumber { get { return GetConfigValue("PhoneNumber"); } }
+        //public string MobileNumber { get { return GetConfigValue("MobileNumber"); } }
+        //public string FacebookURL { get { return GetConfigValue("FacebookURL"); } }
+        //public string TwitterUsername { get { return GetConfigValue("TwitterUsername"); } }
+        //public string TwitterURL { get { return GetConfigValue("TwitterURL"); } }
+        //public string WhatsAppNumber { get { return GetConfigValue("WhatsAppNumber"); } }
+        //public string InstagramURL { get { return GetConfigValue("InstagramURL"); } }
+        //public string YouTubeURL { get { return GetConfigValue("YouTubeURL"); } }
+        //public string LinkedInURL { get { return GetConfigValue("LinkedInURL"); } }
 
-        private static int? _DashboardRecordsSizePerPage { get; set; }
-        public int DashboardRecordsSizePerPage
-        {
-            get
-            {
-                if (!_DashboardRecordsSizePerPage.HasValue)
-                {
-                    //var config = ConfigurationsService.Instance.GetConfigurationByKey("DashboardRecordsSizePerPage");
-                    var config = _configuration.GetValue<string>("DashboardRecordsSizePerPage");                    
 
-                    if (config != null)
-                    {
-                        _DashboardRecordsSizePerPage = int.Parse(config);
-                    }
-                    else _DashboardRecordsSizePerPage = 0;
-                }
+        //public int DashboardRecordsSizePerPage()
+        //{
+        //    var value = _configuration.GetValue<string>("DashboardRecordsSizePerPage");
+        //    if (!_DashboardRecordsSizePerPage.HasValue)
+        //    {
+        //        //var config = ConfigurationsService.Instance.GetConfigurationByKey("DashboardRecordsSizePerPage");
+        //        var config = _configuration.GetValue<string>("DashboardRecordsSizePerPage");
 
-                return _DashboardRecordsSizePerPage.Value;
-            }
-        }
+        //        if (config != null)
+        //        {
+        //            _DashboardRecordsSizePerPage = int.Parse(config);
+        //        }
+        //        else _DashboardRecordsSizePerPage = 0;
+        //    }
+
+        //    return _DashboardRecordsSizePerPage.Value;
+        //}
+
+        //private static int? _DashboardRecordsSizePerPage { get; set; }
+        //public int DashboardRecordsSizePerPage
+        //{
+        //    get
+        //    {
+        //        if (!_DashboardRecordsSizePerPage.HasValue)
+        //        {
+        //            //var config = ConfigurationsService.Instance.GetConfigurationByKey("DashboardRecordsSizePerPage");
+        //            var config = _configuration.GetValue<string>("DashboardRecordsSizePerPage");                    
+
+        //            if (config != null)
+        //            {
+        //                _DashboardRecordsSizePerPage = int.Parse(config);
+        //            }
+        //            else _DashboardRecordsSizePerPage = 0;
+        //        }
+
+        //        return _DashboardRecordsSizePerPage.Value;
+        //    }
+        //}
 
         private static int? _FeaturedRecordsSizePerPage { get; set; }
         public int FeaturedRecordsSizePerPage

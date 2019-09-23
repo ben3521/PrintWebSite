@@ -48,8 +48,10 @@ namespace PrintWebSite
             services.AddIdentity<PrintWebUser, IdentityRole>()
                    .AddRoleManager<RoleManager<IdentityRole>>()
                    .AddEntityFrameworkStores<PrintWebSiteDbContext>();
-
-            services.AddTransient<IProductsRepository, ProductsRepository>();
+            
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IProductsService, ProductsService>();
 
             services.AddMvc();
         }

@@ -13,13 +13,15 @@ namespace PrintWebSite.Controllers
     public class HomeController : Controller
     {
         private readonly IConfiguration configuration;
-        private readonly IProductsRepository productsRepository;
-        private readonly PrintWebSiteDbContext context;
-        public HomeController(PrintWebSiteDbContext context, IConfiguration configuration, IProductsRepository productsRepository)
+        private readonly IProductsService _productsService;
+        private readonly ICategoriesService _categoriesService;
+        public HomeController(IConfiguration configuration,
+            IProductsService productsService,
+            ICategoriesService categoriesService)            
         {
             this.configuration = configuration;
-            this.productsRepository = productsRepository;
-            this.context = context;
+            _productsService = productsService;
+            _categoriesService = categoriesService;
         }
         public IActionResult Index()
         {
@@ -36,16 +38,15 @@ namespace PrintWebSite.Controllers
         public IActionResult Search(QueryStringViewModel queryStringViewModel)
         {
             var pageSize = int.Parse(configuration.GetSection("FrontendRecordsSizePerPage").Value);
-
-            CategoriesService categoriesService = new CategoriesService(context);
+            
             ProductsViewModel model = new ProductsViewModel
             {
-                Categories = categoriesService.GetAllCategories()
+                Categories = _categoriesService.GetAllCategories()
             };
 
             if (!string.IsNullOrEmpty(queryStringViewModel.Category))
             {
-                var selectedCategory = categoriesService.GetCategoryByName(queryStringViewModel.Category);
+                var selectedCategory = _categoriesService.GetCategoryByName(queryStringViewModel.Category);
 
                 if (selectedCategory == null) return NotFound();
                 else
@@ -76,8 +77,8 @@ namespace PrintWebSite.Controllers
 
             var selectedCategoryIDs = model.SearchedCategories?.Select(x => x.ID).ToList();            
 
-            model.Products = productsRepository.SearchProducts(selectedCategoryIDs, model.SearchTerm, queryStringViewModel.PageNo, pageSize);
-            var totalProducts = productsRepository.GetProductCount(selectedCategoryIDs, queryStringViewModel.q);
+            model.Products = _productsService.SearchProducts(selectedCategoryIDs, model.SearchTerm, queryStringViewModel.PageNo, pageSize);
+            var totalProducts = _productsService.GetProductCount(selectedCategoryIDs, queryStringViewModel.q);
 
             model.Pager = new Pager(totalProducts, queryStringViewModel.PageNo, pageSize);           
 
