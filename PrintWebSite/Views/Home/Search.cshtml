@@ -19,7 +19,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-9 padding-left-lg col-xl-10">                
+                <div class="col-lg-9 padding-left-lg col-xl-10">
 
                     <nav class="toolbox">
                         <div class="toolbox-item toolbox-show">
@@ -53,7 +53,7 @@
                                         {
                                             foreach (var category in Model.Categories.OrderBy(x => x.Name))
                                             {
-                                                <li><a href="#" data-filter-id="@category.Name" class="FilterAnchor">@category.Name</a></li>
+                                                <li><a href="/@category.Name" data-filter-id="@category.Name" class="FilterAnchor">@category.Name</a></li>
                                             }
                                         }
                                     </ul>
@@ -281,15 +281,129 @@
 @section Scripts
     {
     <script>
-       $(".FilterAnchor").click(function () {
-    var filter = $(this).attr("data-filter-id");
 
-    if (filter !== "" || filter !== undefined) {
-        GetData(filter);
-    }
-});
+        $(function () {
 
-function GetData(dUrl) {
+            var contentShell = $('#productsDiv');
+            var location = window.history.location || window.location;
+             //history.replaceState({ role: 'page' }, null, location.pathname);
+
+            $(".FilterAnchor").click(function (e) {
+                e.preventDefault();
+               
+                var filter = $(this).attr("data-filter-id");
+                if (filter !== "" || filter !== undefined) {
+                    dUrl = "?Category=" + filter;
+                } 
+
+                history.pushState({ role: 'page' }, null, dUrl);
+                GetData(location.pathname + dUrl);
+                //console.log('pushstate triggered');
+                //console.log(window.location.href);
+            });
+
+
+            $(window).on('popstate', function (e) {
+                //console.log('popstate triggered');
+                //console.log("location: " + document.location + ", state: " +
+
+                //    JSON.stringify(event.state));
+                //console.log(window.location.href);
+                var state = e.originalEvent.state;
+                //console.log(state);
+
+                //if (state && state.role === 'page') {
+                //    popstateInProgress = true;
+           
+               GetData(window.location.href);
+            //}
+                
+            });
+
+            function GetData(dUrl) {
+                $.ajax({
+                    url: dUrl,
+                    //data: {
+                    //    Category: dUrl
+                    //}
+                })
+                    .done(function (response) {
+                        contentShell.html(response);
+                    })
+                    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    })
+                    .always(function () {
+                    });
+            }
+
+        });
+
+//        $(".FilterAnchor").click(function (e) {
+//            e.preventDefault();
+//    var filter = $(this).attr("data-filter-id");
+
+//    if (filter !== "" || filter !== undefined) {
+//        GetData(filter);
+//    }
+//});
+
+//$(function () {
+
+//    var contentShell = $('#bodyContent');
+//    var History = window.History, State = History.getState();
+
+//    $(".FilterAnchor").on('click', function (e) {
+//        e.preventDefault();
+//        var url = $(this).attr("data-filter-id");
+//        //var title = $(this).data('title');
+//        History.pushState(null, null, url);
+//    });
+
+//    History.Adapter.bind(window, 'statechange', function () {
+//        State = History.getState();
+//        if (State.url === '') {
+//            return;
+//        }
+//        navigateToURL(State.url);
+//    });
+
+//    function navigateToURL(url) {
+//        $('#bodyContent').showLoading();
+//        $.ajax({
+//            type: "GET",
+//            url: url,
+//            dataType: "html",
+//            success: function (data, status, xhr) {
+//                contentShell.hideLoading();
+//                $('#bodyContent').hide();
+//                contentShell.html(data);
+//                $('#bodyContent').fadeIn(1000);
+//            },
+//            error: function (xhr, status, error) {
+//                contentShell.hideLoading();
+//                alert("Error loading Page.");
+//            }
+//        });
+//    }
+//}
+
+
+
+//$(window).on('popstate', function (e) {
+//    var location = window.history.location || window.location;
+//    // subscribing on popstate using jQuery state is in the 'originalEvent' field
+//    var state = e.originalEvent.state;
+//    console.log('state' + state);
+//    // use a special field of state to track history of ajax action links
+//    if (state && state.role === 'page') {
+//        popstateInProgress = true;
+//        //navigate(location.pathname);
+//    }
+//});
+
+
+
+@*function GetData(dUrl) {
     //showLoader();
 
     $.ajax({
@@ -299,32 +413,41 @@ function GetData(dUrl) {
         }
     })
         .done(function (response) {
-            //window.history.pushState(null, "", "?Category=" + dUrl);
-            @*window.location.href = "@Url.Action("Search")?Category=" + dUrl;*@
+            window.history.pushState(null, "", "?Category=" + dUrl);
             $("#productsDiv").html(response);
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             //alert("FAIL");
         })
         .always(function () {
-            @*window.location.href = "@Url.Action("Search")?Category=" + dUrl;*@
             //hideLoader();
-            //console.log(window.location.hash);
-            //console.log(window.location.href);
-            //console.log(window.location.search);
-            //console.log(location.pathname.split("/").pop());
-            //console.log(location.pathname);
-        });
-        }
 
-        $(window).on("hashchange", function (e) {
-            console.log('window changed');
         });
+}*@
 
-        $(window).on('popstate', function (e) {
+        //$(window).on("hashchange", function (e) {
+        //    console.log('window changed');
+        //});
 
-        console.log(e.originalEvent.state);
-        });
+        //$(window).bind("popstate", function(event) {
+        //                       var state = event.originalEvent.state;
+        //                       ...
+        //                    }
+
+//            pushState (myInitialState, null, href);
+//pushState (myInitialState, null, href);
+
+
+        //$(window).on('popstate', function (e) {
+        //    console.log('1' + window.location.hash);
+        //    console.log('2' + window.location.href);
+        //    console.log('3' + window.location.search);
+        //    console.log('4' + location.pathname.split("/").pop());
+        //    console.log('5' + location.pathname);
+        //    console.log('6' + window.history.state);
+        //    console.log('7' + e.originalEvent.state);
+        //console.log(e);
+        //});
 
     </script>
 }

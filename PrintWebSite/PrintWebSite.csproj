@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\bcherry.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="BundlerMinifier.Core" Version="2.9.406" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -29,6 +33,30 @@
     <Folder Include="Views\Category\" />
     <Folder Include="wwwroot\Content\css\" />
     <Folder Include="wwwroot\Scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\vendor\dojo.js" />
+    <None Include="wwwroot\vendor\extjs.js" />
+    <None Include="wwwroot\vendor\jquery.js" />
+    <None Include="wwwroot\vendor\mootools.js" />
+    <None Include="wwwroot\vendor\qunit\.gitignore" />
+    <None Include="wwwroot\vendor\qunit\grunt.js" />
+    <None Include="wwwroot\vendor\qunit\History.md" />
+    <None Include="wwwroot\vendor\qunit\qunit\.jshintrc" />
+    <None Include="wwwroot\vendor\qunit\qunit\qunit.js" />
+    <None Include="wwwroot\vendor\qunit\README.md" />
+    <None Include="wwwroot\vendor\qunit\test\.jshintrc" />
+    <None Include="wwwroot\vendor\qunit\test\async.js" />
+    <None Include="wwwroot\vendor\qunit\test\deepEqual.js" />
+    <None Include="wwwroot\vendor\qunit\test\logs.js" />
+    <None Include="wwwroot\vendor\qunit\test\narwhal-test.js" />
+    <None Include="wwwroot\vendor\qunit\test\node-test.js" />
+    <None Include="wwwroot\vendor\qunit\test\same.js" />
+    <None Include="wwwroot\vendor\qunit\test\swarminject.js" />
+    <None Include="wwwroot\vendor\qunit\test\test.js" />
+    <None Include="wwwroot\vendor\right.js" />
+    <None Include="wwwroot\vendor\zepto.js" />
   </ItemGroup>
 
 </Project>

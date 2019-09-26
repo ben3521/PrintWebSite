@@ -22,12 +22,13 @@ namespace PrintWebSite.Controllers
             this.configuration = configuration;
             _productsService = productsService;
             _categoriesService = categoriesService;
-        }
+        }        
+
         public IActionResult Index()
         {
             PageViewModel model = new PageViewModel();
 
-            model.PageTitle = "Logo Sports Home";
+            model.PageTitle = "Home";
             model.PageDescription = "LogoSports Online WebStore";
             //model.PageURL = Url.Home().ToSiteURL();
             //model.PageImageURL = PictureHelper.PageImageURL("products.jpg");
